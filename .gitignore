@@ -1,3 +1,15 @@
+# OS and software
+.DS_Store
+.vscode
+
+# notes
+private
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Prerequisites
 *.d
 
