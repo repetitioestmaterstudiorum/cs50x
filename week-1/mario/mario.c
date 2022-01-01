@@ -1,9 +1,7 @@
 #include <cs50.h>
 #include <stdio.h>
 
-// compile and run it: "gcc -lcs50 ./mario.c -o mario && ./mario"
-// check it: check50 cs50/problems/2021/x/mario/more
-// submit it: submit50 cs50/problems/2021/x/mario/more
+// ---
 
 void print_blocks(int length);
 
@@ -16,7 +14,8 @@ int main(void)
     do
     {
         height = get_int("Height: ");
-    } while (height < 1 || height > 8);
+    }
+    while (height < 1 || height > 8);
 
     /* print pyramid */
     for (int i = 1; i <= height; i++)
@@ -47,3 +46,9 @@ void print_blocks(int length)
         printf("#");
     }
 }
+
+/* 
+compile and run it: "clang -lcs50 ./mario.c -o mario.out && ./mario.out"
+check it: check50 cs50/problems/2022/x/mario/more
+submit it: submit50 cs50/problems/2022/x/mario/more
+*/

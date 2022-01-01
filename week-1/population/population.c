@@ -1,6 +1,8 @@
 #include <cs50.h>
 #include <stdio.h>
 
+// ---
+
 int get_start_size_larger_than_nine(void);
 int get_end_size_larger_than_start(int start_size);
 
@@ -47,4 +49,4 @@ int get_end_size_larger_than_start(int start_size)
     return end_size;
 }
 
-// gcc -lcs50 ./population.c -o population && ./population
+// compile and run it: clang -lcs50 ./population.c -o population.out && ./population.out

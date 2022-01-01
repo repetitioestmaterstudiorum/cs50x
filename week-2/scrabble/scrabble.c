@@ -3,6 +3,8 @@
 #include <ctype.h>
 #include <string.h>
 
+// ---
+
 /* In the game of Scrabble, players create words to score points, and the number of points is the sum of the point values of each letter in the word.
 
 0 Points - Blank tile.
@@ -16,7 +18,7 @@
 
 For example, if we wanted to score the word Code, we would note that in general Scrabble rules, the C is worth 3 points, the o is worth 1 point, the d is worth 2 points, and the e is worth 1 point. Summing these, we get that Code is worth 3 + 1 + 2 + 1 = 7 points. */
 
-const bool logging = false;
+const bool LOGGING = false;
 
 int main(void)
 {
@@ -27,9 +29,9 @@ int main(void)
     // Score both words
     int compute_score(string word);
     int score1 = compute_score(word1);
-    logging && printf("score1: %i\n", score1);
+    LOGGING &&printf("score1: %i\n", score1);
     int score2 = compute_score(word2); 
-    logging && printf("score2: %i\n", score2);
+    LOGGING &&printf("score2: %i\n", score2);
 
     /* In main(), your program should print, depending on the players’ scores, Player 1 wins!, Player 2 wins!, or Tie!. */
 
@@ -66,12 +68,12 @@ int compute_score(string word)
         if (isalpha(word[i])) // no points for non-alpha numeric characters
         {
             char lowered = tolower(word[i]); 
-            logging && printf("input: %c, ascii: %i, arr idx: %i, points: %i\n", lowered, lowered, lowered - 97, POINTS[lowered - 97]);
+            LOGGING &&printf("input: %c, ascii: %i, arr idx: %i, points: %i\n", lowered, lowered, lowered - 97, POINTS[lowered - 97]);
             points += POINTS[lowered - 97];
         }
         else 
         {
-            logging && printf("not alpha: %c\n", word[i]);
+            LOGGING &&printf("not alpha: %c\n", word[i]);
         }
     }
 
@@ -80,6 +82,6 @@ int compute_score(string word)
 
 /*
 compile and run: clang -lcs50 ./scrabble.c -o scrabble && ./scrabble
-check: check50 cs50/labs/2021/x/scrabble
-submit: submit50 cs50/labs/2021/x/scrabble
+check: check50 cs50/labs/2022/x/scrabble
+submit: submit50 cs50/labs/2022/x/scrabble
 */

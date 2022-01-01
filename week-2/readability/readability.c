@@ -4,6 +4,8 @@
 #include <string.h>
 #include <math.h>
 
+// ---
+
 /* 
 - Your program should count the number of letters, words, and sentences in the text. You may assume that a letter is any lowercase character from a to z or any uppercase character from A to Z, any sequence of characters separated by spaces should count as a word, and that any occurrence of a period, exclamation point, or question mark indicates the end of a sentence.
 - Your program should print as output "Grade X" where X is the grade level computed by the Coleman-Liau formula (index = 0.0588 * L - 0.296 * S - 15.8 [L is the average number of letters per 100 words in the text, and S is the average number of sentences per 100 words in the text]), rounded to the nearest integer.
@@ -11,7 +13,7 @@
 - Exampls: Text: Congratulations! Today is your day. You're off to Great Places! You're off and away! => Grade 3
 */
 
-const bool logging = false;
+const bool LOGGING = false;
 
 int main(void)
 {
@@ -20,24 +22,24 @@ int main(void)
     // counting
     int count_letters(string text);
     int letters = count_letters(text);
-    logging && printf("letters: %i\n", letters);
+    LOGGING &&printf("letters: %i\n", letters);
 
     int count_words(string text);
     int words = count_words(text);
-    logging && printf("words: %i\n", words);
+    LOGGING &&printf("words: %i\n", words);
 
     int count_sentences(string text);
     int sentences = count_sentences(text);
-    logging && printf("sentences: %i\n", sentences);
+    LOGGING &&printf("sentences: %i\n", sentences);
 
     // index calculations
     float avg_letters_100_words = (float) letters / words * 100;
-    logging && printf("avg_letters_100_words: %f\n", avg_letters_100_words);
+    LOGGING &&printf("avg_letters_100_words: %f\n", avg_letters_100_words);
     float avg_sentences_100_words = (float) sentences / words * 100;
-    logging && printf("avg_sentences_100_words: %f\n", avg_sentences_100_words);
+    LOGGING &&printf("avg_sentences_100_words: %f\n", avg_sentences_100_words);
 
     float index = 0.0588 * avg_letters_100_words - 0.296 * avg_sentences_100_words - 15.8;
-    logging && printf("index: %f\n", index);
+    LOGGING &&printf("index: %f\n", index);
 
     // result interpretation
     if (index > 16)
@@ -57,7 +59,8 @@ int main(void)
     return 0; // good exit code
 }
 
-// the following functions could be combined into one  (e.g. count_text_properties), but this would reduce reusability. The perhaps better argument to being lazy and keeping 3 functions is that the code is easier to read.
+/* the following functions could be combined into one  (e.g. count_text_properties)
+this would reduce reusability but increase the complexity of this function. */
 
 int count_letters(string text)
 {
@@ -103,7 +106,7 @@ int count_sentences(string text)
 }
 
 /*
-compile and run: clang -lcs50 ./readability.c -o readability && ./readability
-check: check50 cs50/problems/2021/x/readability
-submit: submit50 cs50/problems/2021/x/readability
+compile and run: clang -lcs50 ./readability.c -o readability.out && ./readability.out
+check: check50 cs50/problems/2022/x/readability
+submit: submit50 cs50/problems/2022/x/readability
 */

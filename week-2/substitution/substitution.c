@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+// ---
+
 /* 
 Let’s write a program called substitution that enables you to encrypt messages using a substitution cipher. At the time the user executes the program, they should decide, by providing a command-line argument, on what the key should be in the secret message they’ll provide at runtime.
 
@@ -101,6 +103,6 @@ string get_ciphertext(string cipher, string plaintext)
 
 /*
 compile and run: clang -lcs50 ./substitution.c -o substitution.out && ./substitution.out
-check: check50 cs50/problems/2021/x/substitution
-submit: submit50 cs50/problems/2021/x/substitution
+check: check50 cs50/problems/2022/x/substitution
+submit: submit50 cs50/problems/2022/x/substitution
 */
