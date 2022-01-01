@@ -1,0 +1,11 @@
+sort1 uses: bubble sort
+
+How do you know?: is faster with sorted data
+
+sort2 uses: merge sort
+
+How do you know?: consistently fast compared to sort1 and sort3 -> O(n log n)
+
+sort3 uses: selection sort
+
+How do you know?: consistently slow compared to sort1 and sort2 -> O(n^2)

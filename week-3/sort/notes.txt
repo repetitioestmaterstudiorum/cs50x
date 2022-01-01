@@ -1,0 +1,29 @@
+# running the linux binaries
+had the error "zsh: exec format error: ./sort1" when doing `time ./sort1 reversed5000.txt`
+
+used docker image ubuntu instead:
+`docker run -it --name ubu -v /Users/sunyamare/st/code/cs50x/week-3/sort:/cs ubuntu`
+
+run once container exists: 
+`docker start ubu -i`
+
+# test results
+        sort1   sort2   sort3
+ran5k   0.146s  0.154s  0.124s
+ran10k  0.469s  0.176s  0.215s
+ran50k  10.466s 1.376s  5.259s
+rev5k   0.134s  0.134s  0.074s
+rev10k  0.304s  0.437s  0.415s
+rev50k  8.279s  1.758s  4.750s
+sor5k   0.037s  0.092s  0.104s
+sor10k  0.380s  0.263s  0.404s
+sor50k  1.291s  1.223s  5.351s
+
+# big o and sorting algorithms
+selection sort: best n^2, worst n^2
+bubble sort: best n, worst n^2
+merge sort: best n log n, worst n log n
+
+sort1: bubble sort, is faster with sorted data
+sort2: merge sort, consistently fast compared to sort1 and sort3 -> O(n log n)
+sort3: selection sort: consistently slow compared to sort1 and sort2 -> O(n^2)
