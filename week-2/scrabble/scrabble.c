@@ -81,7 +81,7 @@ int compute_score(string word)
 }
 
 /*
-compile and run: clang -lcs50 ./scrabble.c -o scrabble && ./scrabble
-check: check50 cs50/labs/2022/x/scrabble
-submit: submit50 cs50/labs/2022/x/scrabble
+compile and run: clang -lcs50 ./scrabble.c -o scrabble.out && ./scrabble.out
+check: check50 cs50/labs/2022/x/scrabble.out
+submit: submit50 cs50/labs/2022/x/scrabble.out
 */
