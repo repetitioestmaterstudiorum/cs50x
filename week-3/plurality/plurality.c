@@ -77,6 +77,7 @@ bool vote(string name)
         {
             is_name_in_candidates = true;
             candidate_index = i;
+            break; // no need to look further
         }
     }
 
