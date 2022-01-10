@@ -146,8 +146,8 @@ void record_preferences(int ranks[])
     /* example candidates: rico, matt, sali
     example choice:     1: matt, 2: sali, 3: rico -> ranks[0]: 1, ranks[1]: 2, ranks[2]: 0
     ranks[0] ranks[1] -> matt sali -> 1, 2: 1 -> preferences[1][2] += 1
-    ranks[0] ranks[2] -> matt thom -> 1, 0: 1 -> preferences[1][0] += 1
-    ranks[1] ranks[2] -> sali thom -> 2, 0: 1 -> preferences[2][0] += 1 */
+    ranks[0] ranks[2] -> matt rico -> 1, 0: 1 -> preferences[1][0] += 1
+    ranks[1] ranks[2] -> sali rico -> 2, 0: 1 -> preferences[2][0] += 1 */
     for (int i = 0; i < candidate_count; i++)
     {
         for (int j = i + 1; j < candidate_count; j++)
