@@ -143,8 +143,8 @@ bool vote(int rank, string name, int ranks[])
 void record_preferences(int ranks[])
 {
     LOG &&printf("ranks[0]: %i, ranks[1]: %i, ranks[2]: %i\n", ranks[0], ranks[1], ranks[2]);
-    /* example candidates: thomas, matt, sali
-    example choice:     1: matt, 2: sali, 3: thomas -> ranks[0]: 1, ranks[1]: 2, ranks[2]: 0
+    /* example candidates: rico, matt, sali
+    example choice:     1: matt, 2: sali, 3: rico -> ranks[0]: 1, ranks[1]: 2, ranks[2]: 0
     ranks[0] ranks[1] -> matt sali -> 1, 2: 1 -> preferences[1][2] += 1
     ranks[0] ranks[2] -> matt thom -> 1, 0: 1 -> preferences[1][0] += 1
     ranks[1] ranks[2] -> sali thom -> 2, 0: 1 -> preferences[2][0] += 1 */
@@ -213,14 +213,14 @@ void sort_pairs(void)
 // locked[i][j] means i is locked in over j
 void lock_pairs(void)
 {
-    /* example pairs after sorting (thomas matt sali):
-    pair 0 - w: thomas, l: sali, won_by: 3
+    /* example pairs after sorting (rico matt sali):
+    pair 0 - w: rico, l: sali, won_by: 3
     pair 1 - w: matt, l: sali, won_by: 3
-    pair 2 - w: matt, l: thomas, won_by: 1
+    pair 2 - w: matt, l: rico, won_by: 1
 
-    graph 1: thomas over sali ->    locked[candidates[thomas]][candidates[sali]  -> locked[0][2]
+    graph 1: rico over sali ->    locked[candidates[rico]][candidates[sali]  -> locked[0][2]
     graph 2: matt over sali ->      locked[candidates[matt]][candidates[sali]    -> locked[1][2]
-    graph 3: matt over thomas ->    locked[candidates[matt]][candidates[thomas]  -> locked[1][0]
+    graph 3: matt over rico ->    locked[candidates[matt]][candidates[rico]  -> locked[1][0]
     bad graph would be: locked[2][1] */
 
     void recurse_creates_cycle(int forbidden_src, int src[], int src_len); 
@@ -253,7 +253,7 @@ void print_winner(void)
 {
     /* example locked matrix (2D array):
     locked[0][1]: true                  0   1   2
-    locked[0][2]: false     thomas  0       t
+    locked[0][2]: false     rico  0       t
     locked[1][0]: false     matt    1     
     locked[1][2]: false     sali    2   t
     locked[2][0]: true
@@ -314,9 +314,9 @@ void recurse_creates_cycle(int forbidden_src, int src[], int src_len)
         {
             /*
             create cycle: 
-            voter 1: matt, sali, thomas
-            voter 2: sali, thomas, matt
-            voter 3: thomas, matt, sali
+            voter 1: matt, sali, rico
+            voter 2: sali, rico, matt
+            voter 3: rico, matt, sali
             locked: [0][1] and [2][0], cycle (not locked in): [1][2]
             */
             LOG &&printf("CYCLE!\n");

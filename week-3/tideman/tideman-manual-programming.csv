@@ -1,0 +1,31 @@
+,,,,,,,,|
+,,,rico,sali,matt,jose,,|,,,rico,sali,matt,jose
+,,,0,1,2,3,,|,,,0,1,2,3
+,rico,0,,t,,,,|,rico,0,,t,,
+,sali,1,,,,t,,|,sali,1,,,t,t
+,matt,2,t,,,,,|,matt,2,,,,
+,jose,3,,,t,,,|,jose,3,?,,,
+,,,,,,,,|,,,,,,
+,,,,,,,,|,"existing: 0-1, 1-2, 1-3",,,creates cycle?: 3-0,,
+,rico,sali,jose,matt,rico,,,|,,,,,,
+,0,1,3,2,0,,,|,"creates_cycle(forbidden_src: 3, src[]: [0])",,,,,
+,,,,,,,,|,"[0] -> 0-3 true? -> get all dst of v 0-x true: 0-0, 0-1, 0-2, 0-3 -> [1]",,,,,
+,,,,,,,,|,[1] -> 1-3 true? -> yes -> cycle!,,,,,
+,0-1 1-3 3-2  2-0,,,,,,,|,-------------,-------------,-------------,-------------,-------------,-------------,,,
+,,,,,,,,|
+,3-2 0-1 2-0,,,,,,,|,,,rico,sali,matt,jose
+,1-3 gud?,,,,,,,|,,,0,1,2,3
+,,,,,,,,|,rico,0,,t,t,
+,"forbidden_src = 1 get passed on, src[] dynamic",,,,,,,|,sali,1,,,,t
+,src[3] -> 3-1 true? -> get all vectors with src 3-x true -> 3-0? 3-1? 3-2? -> 3-2 -> ,,,,,,,|,matt,2,,,,
+,src[2] -> 2-1 true? -> get all vectors with src 2-x true -> 2-0? 2-1? 2-3? -> 2-0 ->,,,,,,,|,jose,3,?,,,
+,src[0] -> 0-1 true? cycle!,,,,,,,|,,,,,,
+,,,,,,,,|,"existing: 0-1, 0-2, 1-3",,,creates cycle?: 3-0,,
+,,,,,-------------,-------------,-------------,-------------,,,,,,
+,,,,,|,,,,"creates_cycle(forbidden_src: 3, src[]: [0], src_len: 1)",,,,,
+,,,,,|,nxt_len = 1,"next_src = [1,2]",,for i < src_len
+,,,,,|,,,,"[0] -> 0-3 true? -> get all dst of v 0-x true: 0-0, 0-1, 0-2, 0-3 -> [1, 2]",,,,,
+,,,,,|,,,,"creates_cycle(forbidden_src: 3, src[]: [1,2], src_len: 2)",,,,,
+,,,,,|,nxt_len = 0,next-src = [],,for i < src_len
+,,,,,|,,,,[2] -> 2-3 true? -> get all dst of v 2-x true: -
+,,,,,|,,,,[1] -> 1-3 true? -> yes -> cycle!
