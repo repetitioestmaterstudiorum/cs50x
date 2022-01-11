@@ -10,7 +10,7 @@ Sort: Sort the pairs of candidates in decreasing order of strength of victory, w
 
 Lock: Starting with the strongest pair, go through the pairs of candidates in order and “lock in” each pair to the candidate graph, so long as locking in that pair does not create a cycle in the graph. */
 
-const bool LOG = true;
+const bool LOG = false;
 
 // Max number of candidates
 #define MAX 9
@@ -20,8 +20,8 @@ int preferences[MAX][MAX];
 
 // locked[i][j] means i is locked in over j
 bool locked[MAX][MAX];
-bool cycle = false;
 int locked_count;
+bool cycle;
 
 // Each pair has a winner, loser
 typedef struct
@@ -230,6 +230,7 @@ void lock_pairs(void)
         LOG &&printf("pairs[i].winner: %i\n", pairs[i].winner);
         int loser_as_array[] = {pairs[i].loser};
 
+        cycle = false;
         recurse_creates_cycle(pairs[i].winner, loser_as_array, 1);
 
         if (!cycle)
@@ -242,53 +243,90 @@ void lock_pairs(void)
     LOG &&printf("\n");
     LOG &&printf("locked[0][1]: %i\n", locked[0][1]);
     LOG &&printf("locked[0][2]: %i\n", locked[0][2]);
+    LOG &&printf("locked[0][3]: %i\n", locked[0][3]);
     LOG &&printf("locked[1][0]: %i\n", locked[1][0]);
     LOG &&printf("locked[1][2]: %i\n", locked[1][2]);
+    LOG &&printf("locked[1][3]: %i\n", locked[1][3]);
     LOG &&printf("locked[2][0]: %i\n", locked[2][0]);
     LOG &&printf("locked[2][1]: %i\n", locked[2][1]);
+    LOG &&printf("locked[2][3]: %i\n", locked[2][3]);
+    LOG &&printf("locked[3][0]: %i\n", locked[3][0]);
+    LOG &&printf("locked[3][1]: %i\n", locked[3][1]);
+    LOG &&printf("locked[3][2]: %i\n", locked[3][2]);
 }
 
 // Print the winner of the election
 void print_winner(void)
 {
     /* example locked matrix (2D array):
-    locked[0][1]: true                  0   1   2
-    locked[0][2]: false     rico  0       t
-    locked[1][0]: false     matt    1     
-    locked[1][2]: false     sali    2   t
-    locked[2][0]: true
+    locked[0][1]: true                      rico    matt    jose    anna
+    locked[0][2]: true                      0       1       2       3
+    locked[0][3]: true      rico    0               t       t       t
+    locked[1][0]: false     matt    1                       t
+    locked[1][2]: true      jose    2                               *
+    locked[1][3]: false     anna    3               t
+    locked[2][0]: false
     locked[2][1]: false
-    winner = no arrows point to candidate -> 2: sali */
+    locked[2][3]: *false
+    locked[3][0]: false
+    locked[3][1]: true
+    locked[3][2]: false
+    *: actually should be a win but isn't locked because would've created a cycle
+    -> winner: no arrows point to candidate -> 0: rico */
 
-    int winner;
     int potential_winners[candidate_count];
     int potential_winners_count = 0;
 
+    // collect all potential winners (candidates with vectors from them to anyeone else)
     for (int i = 0; i < candidate_count; i++)
     {
         for (int y = 0; y < candidate_count; y++)
         {
+            LOG &&printf("[%i][%i] == ?\n", i, y);
             if (locked[i][y] == true)
             {
+                LOG &&printf("[%i][%i] == true\n", i, y);
                 potential_winners[potential_winners_count] = i;
                 potential_winners_count += 1;
+                break;
             }
         }
     }
 
+    LOG &&printf("\n");
+    LOG &&printf("potential_winners_count: %i\n", potential_winners_count);
+    LOG &&printf("potential_winners[0]: %i\n", potential_winners[0]);
+    LOG &&printf("potential_winners[1]: %i\n", potential_winners[1]);
+    LOG &&printf("potential_winners[2]: %i\n", potential_winners[2]);
+    LOG &&printf("potential_winners[3]: %i\n", potential_winners[3]);
+
+    // check if vector leads to a potential winner, if not, we got the winner
+    int winner = -1;
     for (int i = 0; i < potential_winners_count; i++)
     {
         int curr = potential_winners[i];
+        LOG &&printf("winner: %i\n", winner);
+
+        if (winner != -1)
+        {
+            break;
+        }
+
         for (int j = 0; j < candidate_count; j++)
         {
-            if (locked[j][curr])
+            LOG &&printf("[j][curr] => [%i][%i] == %d\n", j, curr, locked[j][curr]);
+            if (j == curr)
             {
+                LOG &&printf("continue: j == curr\n");
                 continue;
             }
-            else
+            else if (locked[j][curr] == true)
             {
-                winner = curr;
+                LOG &&printf("locked[j][curr] == true\n");
                 break;
+            }
+            else {
+                winner = curr;
             }
         }
     }
@@ -367,11 +405,9 @@ submit: submit50 cs50/problems/2022/x/tideman
     -> can't reproduce. maybe because added won_by to struct, which was provided by cs50x
 :) lock_pairs locks all pairs when no cycles
 :) lock_pairs skips final pair if it creates cycle
--> :( lock_pairs skips middle pair if it creates a cycle
-    lock_pairs did not correctly lock all non-cyclical pairs
-    -> can't reproduce!
--> :( print_winner prints winner of election when one candidate wins over all others
+:) lock_pairs skips middle pair if it creates a cycle
+:) print_winner prints winner of election when one candidate wins over all others
+:( print_winner prints winner of election when some pairs are tied
     print_winner did not print winner of election
-    -> can't reproduce!
-:) print_winner prints winner of election when some pairs are tied
+    -> can't reproduce
 */
