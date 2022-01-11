@@ -8,7 +8,9 @@
 
 Sort: Sort the pairs of candidates in decreasing order of strength of victory, where strength of victory is defined to be the number of voters who prefer the preferred candidate.
 
-Lock: Starting with the strongest pair, go through the pairs of candidates in order and “lock in” each pair to the candidate graph, so long as locking in that pair does not create a cycle in the graph. */
+Lock: Starting with the strongest pair, go through the pairs of candidates in order and “lock in” each pair to the candidate graph, so long as locking in that pair does not create a cycle in the graph. 
+
+complete instructions: https://cs50.harvard.edu/x/2022/psets/3/tideman/ */
 
 const bool LOG = false;
 
