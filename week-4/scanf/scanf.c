@@ -17,8 +17,8 @@ int main(void)
     scanf("%s", y); // get string, put it in pointer location of y
     printf("y: %s\n", y);
     /*
-    this *should* lead to a segmentation fault or just save only one word
-    if more than 1 string is entered
+    this *should* lead to a segmentation fault (however, it just saves only one string
+    if more than 1 string is entered)
     */
 }
 
