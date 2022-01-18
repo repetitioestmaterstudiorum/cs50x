@@ -1,3 +1,6 @@
+# project files
+*.wav
+
 # OS and software
 .DS_Store
 .vscode
