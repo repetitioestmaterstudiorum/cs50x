@@ -94,8 +94,12 @@ int main(void)
         printf("uppercasing first letter of variable 'destination'\n");
         destination[0] = toupper(destination[0]);
     }
-    free(destination); // if executed, will scramble destination contents ... why?
-    printf("then: source: %s, destination: %s\n", source, destination);
+    printf("after: source: %s, destination: %s\n", source, destination);
+    printf("source memory: %p, destination memory: %p\n", &source, &destination);
+
+    free(destination); // this will remove data at that variable, so only do after done
+    printf("destination has been freed. \n");
+    printf("after: source: %s, destination: %s\n", source, destination);
     printf("source memory: %p, destination memory: %p\n", &source, &destination);
 
     print_space(); // ---
