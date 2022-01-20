@@ -44,15 +44,16 @@ int main(void)
     char *str_1 = "This is a string!";
     char *str_2 = "This is a string!";
     printf("str_1: %s, str_2: %s\n", str_1, str_2);
-    printf("str_1 address: %p, str_2 address: %p\n", &str_1, &str_2);
+    printf("str_1 address: %p, str_2 address: %p\n", str_1, str_2);
+    printf("str_1 pointer address: %p, str_2 pointer address: %p\n", &str_1, &str_2);
     printf("str_1 == str_2: %d\n", str_1 == str_2);
     if (str_1 == str_2)
     {
-        printf("the same!\n");
+        printf("points to the same place!\n");
     }
     else
     {
-        printf("not the same!\n");
+        printf("does not point to the same place!\n");
     }
     printf("strcmp(str_1, str_2) == 0: %d\n", strcmp(str_1, str_2) == 0);
     char *fdsa = get_string("fdsa: ");
@@ -62,7 +63,7 @@ int main(void)
     printf("fdsa == jklö: %d\n", fdsa == jklö);
     printf("strcmp(fdsa, jklö) == 0: %d\n", strcmp(fdsa, jklö) == 0);
     // -> comparing to same self-typed strings returns true, with get_string false
-    // why is str_1 == str_2 when it shouldn't (comparing pointers that aren't the same)?
+    // why is str_1 == str_2 when it shouldn't? -> because C optimized same strings to be stored at the same place, then the pointers point to the same space in memory
 
     print_space(); // ---
 
