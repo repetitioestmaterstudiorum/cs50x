@@ -1,5 +1,6 @@
 # project files
 *.wav
+*.bmp
 
 # OS and software
 .DS_Store
