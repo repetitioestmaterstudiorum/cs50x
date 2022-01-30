@@ -1,0 +1,42 @@
+/* elements */
+html,
+body {
+	font-family: Helvetica, sans-serif;
+}
+
+a {
+	color: rgb(63, 105, 150);
+	text-decoration: none;
+}
+
+a:hover {
+	color: rgb(77, 139, 187);
+	cursor: crosshair;
+}
+
+/* footer */
+footer {
+	color: rgb(25, 31, 40);
+	font-size: 0.7rem;
+}
+
+footer p:first-child {
+	margin-bottom: 0.3rem;
+}
+
+/* custome classes */
+.space-above {
+	margin-top: 1em;
+}
+
+/* specific styling */
+.python-logo {
+	padding-bottom: 0.2rem;
+}
+
+#gradient-art {
+	background-image: linear-gradient(to right, lightcoral, lightsalmon, lightyellow, lightgreen);
+	height: 40vh;
+	width: 100%;
+	max-width: 800px;
+}
