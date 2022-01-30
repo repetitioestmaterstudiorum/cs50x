@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+			rel="stylesheet"
+		/>
+		<link href="styles.css" rel="stylesheet" />
+		<title>Trivia!</title>
+	</head>
+	<body>
+		<div class="header">
+			<h1>Trivia!</h1>
+		</div>
+
+		<div class="container">
+			<div class="section">
+				<h2>Part 1: Multiple Choice</h2>
+				<hr />
+				<!-- TODO: Add multiple choice question here -->
+				<h3>How many eyes does a bee have?</h3>
+				<p id="q1-result"></p>
+				<div id="q1-buttons">
+					<button id="q1-b1">One</button>
+					<button id="q1-b2">Two</button>
+					<button id="q1-b3">Three</button>
+					<button id="q1-b4">Four</button>
+					<button id="q1-b5">Five</button>
+				</div>
+			</div>
+
+			<div class="section">
+				<h2>Part 2: Free Response</h2>
+				<hr />
+				<!-- TODO: Add free response question here -->
+				<h3>Which mammal has no vocal cords?</h3>
+				<p id="q2-result"></p>
+				<form>
+					<input type="text" id="q2-answer" />
+					<button type="submit" id="q2-submit-btn">Check Answer</button>
+				</form>
+			</div>
+		</div>
+		<script>
+			// TODO: Add code to check answers to questions
+
+			// q1 interaction
+			document.querySelector('#q1-buttons').addEventListener('click', function (e) {
+				e.preventDefault()
+				// initialize all colors
+				;['#q1-b1', '#q1-b2', '#q1-b3', '#q1-b4', '#q1-b5'].forEach(b => uncolorElement(b))
+
+				// set current button red or green
+				if (e.target.id === 'q1-b5') {
+					colorElement(`#${e.target.id}`, 'green')
+					showTextBelowTarget('#q1-result', 'Correct!')
+				} else {
+					colorElement(`#${e.target.id}`, 'red')
+					showTextBelowTarget('#q1-result', 'Incorrect')
+				}
+			})
+
+			// q2 interaction
+			document.querySelector('#q2-submit-btn').addEventListener('click', function (e) {
+				e.preventDefault()
+
+				const answer = document.querySelector('#q2-answer').value.toLowerCase()
+				const acceptableAnswers = ['giraffe', 'a giraffe', 'the giraffe']
+
+				if (acceptableAnswers.includes(answer)) {
+					showTextBelowTarget('#q2-result', 'Correct!')
+					colorElement('#q2-answer', 'green')
+				} else {
+					showTextBelowTarget('#q2-result', 'Incorrect')
+					colorElement('#q2-answer', 'red')
+				}
+			})
+
+			// helpers
+			function showTextBelowTarget(targetId, text) {
+				document.querySelector(targetId).innerHTML = text
+			}
+
+			function colorElement(targetId, color) {
+				document.querySelector(targetId).style.backgroundColor = color
+			}
+
+			function uncolorElement(targetId) {
+				document.querySelector(targetId).style.backgroundColor = null
+			}
+		</script>
+	</body>
+</html>
