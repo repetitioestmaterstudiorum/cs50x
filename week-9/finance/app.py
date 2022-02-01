@@ -185,7 +185,7 @@ def login():
         elif not request.form.get("password"):
             return apology("must provide password", 400)
 
-        # Query database for username
+        # Query database for user
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
         # Ensure username exists and password is correct
