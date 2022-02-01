@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <h1>Sell</h1>
+    <form action="/sell" method="post">
+        <select class="form-select custom-select mb-3" size="2" aria-label="select" autofocus name="symbol">
+            {% for as in active_symbols %}
+                <option value="{{ as }}">{{ as }}</option>
+            {% endfor %}
+          </select>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="shares" placeholder="Shares" type="text" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Sell</button>
+    </form>
+
+    <!-- no need for a 2nd template -->
+    {% if sale %}
+        <h2 class="mt-5">Sold!</h2>
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>symbol</th>
+                    <th>amount</th>
+                    <th>total price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ sale.symbol }}</td>
+                    <td>{{ sale.amount }}</td>
+                    <td>{{ sale.total_price | usd }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3><a href="/">Holdings overview</a></h3>
+    {% endif %}
+
+    <script>
+        // set first option selected on first load
+        document.querySelector(".custom-select > option:nth-child(1)").selected = true
+    </script>
+    
+{% endblock %}

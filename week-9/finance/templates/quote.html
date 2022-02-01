@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <h1>Quote</h1>
+    <form action="/quote" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Symbol" type="text" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Get Quote</button>
+    </form>
+
+    <!-- no need for a 2nd template -->
+    {% if quote %}
+        <h2 class="mt-5">Current data for "{{ quote.symbol }}"</h2>
+        <div class="table-responsive">
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>name</th>
+                        <th>price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ quote.name }}</td>
+                        <td>{{ quote.price | usd }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3><a href="/buy?s={{ quote.symbol }}">Go and buy {{ quote.symbol }}</a></h3>
+    {% endif %}
+    
+{% endblock %}

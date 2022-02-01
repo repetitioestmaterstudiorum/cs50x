@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Holdings overview
+{% endblock %}
+
+{% block main %}
+    <h1>Holdings overview</h1>
+    <p><i>auto-reload in <span id="countdown"></span> seconds</i></p>
+
+    <!-- grand total: current cash plus all stocks's totals -->
+    <h2>Grand totals</h2>
+    <p class="p-low-mb"><strong>current cash: </strong>{{ grand_totals.current_cash | usd }}</p>
+    <p class="p-low-mb"><strong>total stock value: </strong>{{ grand_totals.total_stock_value | usd }}</p>
+    <p><strong>grand total: {{ grand_totals.grand_total | usd }}</strong></p>
+
+    <!-- table per stock: symbol, amount of shares, current price, total -->
+    <h2 class="mt-4">Stock totals</h2>
+    {% if stock_totals %}
+        <div class="table-responsive">
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>symbol</th>
+                        <th>shares</th>
+                        <th>buy value</th>
+                        <th>current value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for st in stock_totals %}
+                    <tr>
+                        <td>{{ st.symbol }}</td>
+                        <td>{{ st.shares }}</td>
+                        <td>{{ st.buy_value | usd }}</td>
+                        <td>{{ st.curr_value | usd }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    <h3><a href="/history">See your transaction history</a></h3>
+
+    <script>
+        // countdown!
+
+        // set initial countdown
+        const seconds = 10 // minimun 1
+        const target = document.querySelector("#countdown")
+        setCountdown(target, seconds)
+        
+        // keep updating countdown
+        setInterval(() => {
+            setCountdown(target, target.innerHTML - 1)
+        }, 1000)
+        
+        // reload page every x seconds
+        setTimeout("location.reload();", seconds * 1000 - 1000); // ~1s (1000ms) load time
+        
+        // helper function
+        function setCountdown(target, time) {
+            target.innerHTML = time
+        }
+    </script>
+    
+{% endblock %}

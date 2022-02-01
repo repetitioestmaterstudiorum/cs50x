@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+    <h1>Buy</h1>
+    <form action="/buy" method="post">
+        <div class="mb-3">
+            <input id="symbol" autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Symbol" type="text" required>
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="shares" placeholder="Shares" type="text" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Buy</button>
+    </form>
+
+    <!-- no need for a 2nd template -->
+    {% if purchase %}
+        <h2 class="mt-5">Purchase for "{{ purchase.symbol }}" made!</h2>
+        <div class="table-responsive">
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>name</th>
+                        <th>amount</th>
+                        <th>total price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ purchase.name }}</td>
+                        <td>{{ purchase.amount }}</td>
+                        <td>{{ purchase.total_price | usd }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3><a href="/">Holdings overview</a></h3>
+    {% endif %}
+
+    <script>
+        const queryString = window.location.search;
+        if (queryString)
+        {
+            const urlParams = new URLSearchParams(queryString);
+            const symbol = urlParams.get('s');
+            if (symbol) {
+                document.querySelector("#symbol").value = symbol
+            }
+        }
+    </script>
+    
+{% endblock %}
