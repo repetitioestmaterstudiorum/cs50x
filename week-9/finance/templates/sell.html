@@ -26,13 +26,15 @@
                 <tr>
                     <th>symbol</th>
                     <th>amount</th>
-                    <th>total price</th>
+                    <th>price</th>
+                    <th>total</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{ sale.symbol }}</td>
                     <td>{{ sale.amount }}</td>
+                    <td>{{ sale.price | usd }}</td>
                     <td>{{ sale.total_price | usd }}</td>
                 </tr>
             </tbody>

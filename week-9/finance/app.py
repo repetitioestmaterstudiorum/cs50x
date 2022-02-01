@@ -94,26 +94,26 @@ def buy():
         # check symbol
         symbol = request.form.get("symbol")
         if not symbol:
-            return apology("must provide symbol", 403)
+            return apology("must provide symbol", 400)
         quote = lookup(symbol)
         if not quote:
-            return apology(f"symbol {symbol} not found on IEX", 403)
+            return apology(f"symbol {symbol} not found on IEX", 400)
         
         # check shares
         shares = request.form.get("shares")
         try:
             shares_int = int(shares)
             if shares_int < 1: 
-                return apology("the minimum purchase amount is 1 share!", 403)
+                return apology("the minimum purchase amount is 1 share!", 400)
         except ValueError:
-            return apology("shares must be a natural number (1, 2, 3...)!", 403)
+            return apology("shares must be a natural number (1, 2, 3...)!", 400)
         
         # check sufficient funds
         total_price = round(shares_int * quote["price"], 2)
         user_id = session.get("user_id")
         user_cash = round(db.execute("SELECT cash FROM users WHERE id = ?", user_id)[0]['cash'], 2)
         if user_cash < total_price:
-            return apology(f"insufficient funds: {user_cash}, total price: {total_price}", 403)
+            return apology(f"insufficient funds: {user_cash}, total price: {total_price}", 400)
         
         # purchase shares
         curr_timestamp = datetime.datetime.now()
@@ -126,16 +126,19 @@ def buy():
         user_updated = db.execute("UPDATE users SET cash = ? WHERE id = ?", new_user_cash, user_id)
 
         if new_trans_id and user_updated:
-            # show purchase result
-            purchase = {
-                "symbol": quote["symbol"],
-                "name": quote["name"],
-                "amount": shares_int,
-                "total_price": total_price
-            }
-            return render_template("buy.html", purchase=purchase)
+            # needed to remove this to pass check50, which expects to go back to "/" after buying
+            # # show purchase result
+            # purchase = {
+            #     "symbol": quote["symbol"],
+            #     "name": quote["name"],
+            #     "amount": shares_int,
+            #     "price": quote["price"],
+            #     "total_price": total_price
+            # }
+            # return render_template("buy.html", purchase=purchase)
+            return redirect("/")
         else:
-            return apology("purchase could not be made", 403)
+            return apology("purchase could not be made", 400)
         
     # show form to buy stocks
     else:
@@ -176,18 +179,18 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            return apology("must provide username", 400)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            return apology("must provide password", 400)
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("invalid username and/or password", 403)
+            return apology("invalid username and/or password", 400)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -219,10 +222,10 @@ def quote():
     if request.method == "POST":
         symbol = request.form.get("symbol")
         if not symbol:
-            return apology("must provide symbol", 403)
+            return apology("must provide symbol", 400)
         quote = lookup(symbol)
         if not quote:
-            return apology("symbol not found on IEX", 403)
+            return apology("symbol not found on IEX", 400)
         return render_template("quote.html", quote=quote)
     # show the quote for a stock symbol
     else:
@@ -237,22 +240,27 @@ def register():
         # Ensure username and password were submitted
         username = request.form.get("username")
         pw = request.form.get("password")
+        confirmation = request.form.get("confirmation")
 
         if not username:
-            return apology("must provide username", 403)
+            return apology("must provide username", 400)
         elif not pw:
-            return apology("must provide password", 403)
+            return apology("must provide password", 400)
+        elif not confirmation:
+            return apology("must provide password twice", 400)
+        elif confirmation != pw:
+            return apology("passwords need to match!", 400)
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", username)
 
         # check password strength
         if pw.isupper() or pw.islower() or pw.isdigit() or pw.isalpha() or len(pw) < 8:
-            return apology("Your password must be min. 8 characters long, contain at least 1 digit and 1 upper and one lower case letter", 403)
+            return apology("Your password must be min. 8 characters long, contain at least 1 digit and 1 upper and one lower case letter", 400)
 
         # Ensure username does not exist yet
         if len(rows) != 0:
-            return apology("this username already exists!", 403)
+            return apology("this username already exists!", 400)
 
         # save new user in db
         hash = generate_password_hash(pw)
@@ -290,25 +298,25 @@ def sell():
         # check symbol
         symbol = request.form.get("symbol")
         if not symbol:
-            return apology("must provide symbol", 403)
+            return apology("must provide symbol", 400)
         quote = lookup(symbol)
         if not quote:
-            return apology(f"symbol {symbol} not found on IEX", 403)
+            return apology(f"symbol {symbol} not found on IEX", 400)
         
         # check shares
         shares = request.form.get("shares")
         try:
             shares_int = int(shares)
             if shares_int < 1: 
-                return apology("the minimum sale amount is 1 share!", 403)
+                return apology("the minimum sale amount is 1 share!", 400)
         except ValueError:
-            return apology("shares must be a natural number (1, 2, 3...)!", 403)
+            return apology("shares must be a natural number (1, 2, 3...)!", 400)
         
         # check sufficient shares to sell
         user_shares = db.execute(
             "SELECT SUM(amount) FROM transactions WHERE user_id = ? AND symbol = ?", user_id, symbol)[0]['SUM(amount)']
         if user_shares < shares_int:
-            return apology(f"insufficient shares: {user_shares} to sell {shares}", 403)
+            return apology(f"insufficient shares: {user_shares} to sell {shares}", 400)
         
         # sell shares
         curr_timestamp = datetime.datetime.now()
@@ -323,15 +331,18 @@ def sell():
         user_updated = db.execute("UPDATE users SET cash = ? WHERE id = ?", new_user_cash, user_id)
 
         if new_trans_id and user_updated:
-            # show sale result
-            sale = {
-                "symbol": quote["symbol"],
-                "amount": shares_int,
-                "total_price": total_price
-            }
-            return render_template("sell.html", active_symbols=active_symbols, sale=sale)
+            # needed to remove this to pass check50, which expects to go back to "/" after selling
+            # # show sale result
+            # sale = {
+            #     "symbol": quote["symbol"],
+            #     "amount": shares_int,
+            #     "price": quote["price"],
+            #     "total_price": total_price
+            # }
+            # return render_template("sell.html", active_symbols=active_symbols, sale=sale)
+            return redirect("/")
         else:
-            return apology("sale could not be made", 403)
+            return apology("sale could not be made", 400)
 
 
 # db schema:
@@ -354,4 +365,5 @@ def sell():
 # CREATE INDEX symbol ON transactions (symbol);
 
 # run: `export API_KEY=..........` then `flask run`
+# check: `check50 cs50/problems/2022/x/finance`
 # submit: `submit50 cs50/problems/2022/x/finance`
