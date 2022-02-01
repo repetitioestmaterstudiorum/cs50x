@@ -1,6 +1,8 @@
 # OS and software
 .DS_Store
 .vscode
+flask_session_
+flask_session
 
 # private notes
 private
