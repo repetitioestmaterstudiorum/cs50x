@@ -1,0 +1,2 @@
+start with live server: 
+`npx light-server -s . -w "**/*.* # #"`
