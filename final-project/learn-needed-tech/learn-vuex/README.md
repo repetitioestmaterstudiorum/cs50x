@@ -1,5 +1,6 @@
 # todo-app
 
+i followed more or less this course: https://www.youtube.com/watch?v=ltzlhAxJr74
 ## Build Setup
 
 ```bash
