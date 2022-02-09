@@ -1,25 +1,23 @@
 <template>
-	<el-header>
+	<el-header class="header">
 		<el-row>
 			<el-col :xs="8" :sm="7" :md="6" :lg="5" :xl="4">
-				<nuxt-link to="/">
-					<el-image class="logo" :src="'logo.png'"></el-image>
-					<span class="logo-text">paramartor</span>
-				</nuxt-link>
+				<div @click="handleSelect('/')">
+					<nuxt-link to="/">
+						<img class="logo" src="~/assets/logo.png" />
+						<span class="logo-text">paramartor</span>
+					</nuxt-link>
+				</div>
 			</el-col>
 			<el-col :xs="16" :sm="17" :md="18" :lg="19" :xl="20">
 				<el-menu
-					:default-active="activeIndex"
+					:default-active="$store.state.nav.activeIndex"
 					mode="horizontal"
 					@select="handleSelect"
 					class="menubar"
 				>
-					<el-menu-item index="0">
-						<nuxt-link to="/">Info</nuxt-link>
-					</el-menu-item>
-					<el-menu-item index="1"
-						><nuxt-link to="/create">Create</nuxt-link>
-					</el-menu-item>
+					<el-menu-item index="/"> Info </el-menu-item>
+					<el-menu-item index="/create">Create </el-menu-item>
 				</el-menu>
 			</el-col>
 		</el-row>
@@ -28,26 +26,29 @@
 
 <script>
 export default {
-	name: 'AppHeader',
-	data() {
-		return {
-			activeIndex: '0',
-		}
-	},
 	methods: {
-		handleSelect(key, keyPath) {
-			console.log('handleSelect', key, keyPath)
+		handleSelect(key) {
+			this.$store.commit('setActiveNav', key)
+			this.$router.push(key)
 		},
 	},
 }
 </script>
 
 <style>
+.header {
+	padding-top: 7px;
+}
+.header a {
+	border-bottom: none;
+}
+
 .logo {
-	width: 60px;
-	height: 60px;
+	width: 49px;
+	height: 49px;
 	position: absolute;
 	left: -4px;
+	top: 7px;
 }
 
 .logo-text {
@@ -56,12 +57,13 @@ export default {
 	font-size: 1.2rem;
 	position: absolute;
 	top: 18px;
-	left: 58px;
+	left: 55px;
 }
 
 .menubar {
 	position: absolute;
 	right: 0;
+	top: -2px;
 }
 
 /* hacky element ui overrides */
