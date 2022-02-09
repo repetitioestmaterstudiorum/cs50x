@@ -63,6 +63,21 @@
 import isEmpty from 'lodash.isempty'
 import cloneDeep from 'lodash.clonedeep'
 
+const initialParams = {
+	bgColor: '#D7D7D7',
+	strokeColor: '#000',
+	MAX_WIDTH: 2000, // overwritten on component mount, constant thereafter
+	width: 600,
+	height: 400,
+	initialSize: 5,
+	drawDirections: {
+		up: true,
+		down: true,
+		left: true,
+		right: true,
+	},
+}
+
 export default {
 	data() {
 		// could be saved in vuex if needed elsewhere someday
@@ -71,20 +86,7 @@ export default {
 			c: {}, // p5 canvas reference
 			loading: true,
 			cEmpty: true,
-			params: {
-				bgColor: '#D7D7D7',
-				strokeColor: '#000',
-				MAX_WIDTH: 2000, // overwritten on component mount, constant thereafter
-				width: 600,
-				height: 400,
-				initialSize: 5,
-				drawDirections: {
-					up: true,
-					down: true,
-					left: true,
-					right: true,
-				},
-			}, // drawing parameters
+			params: cloneDeep(initialParams), // drawing parameters
 		}
 	},
 	async mounted() {
@@ -152,6 +154,8 @@ export default {
 			this.c = new this.p5(sketch)
 		},
 		reset() {
+			this.params = cloneDeep(initialParams)
+
 			// start drawing
 			this.draw()
 
@@ -168,6 +172,7 @@ export default {
 			if (!isEmpty(this.c)) this.c.windowResized()
 		},
 		redraw(key, value) {
+			// get current settings and overwrite them with new selection, then draw the canvas anew
 			const drawDirections = { ...cloneDeep(this.params.drawDirections), [key]: !value }
 			this.draw(drawDirections)
 
