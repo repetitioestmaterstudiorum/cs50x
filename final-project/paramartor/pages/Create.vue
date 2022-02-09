@@ -85,7 +85,6 @@ export default {
 			p5: {}, // p5 library code
 			c: {}, // p5 canvas reference
 			loading: true,
-			cEmpty: true,
 			params: cloneDeep(initialParams), // drawing parameters
 		}
 	},
@@ -94,6 +93,9 @@ export default {
 			// import the library and store it in this component's instance
 			const { default: P5 } = await import('p5')
 			this.p5 = P5
+
+			// set dimenions based on user's browser size
+			this.setDimensions()
 
 			// start drawing
 			this.draw()
@@ -106,14 +108,6 @@ export default {
 		draw({ up = true, down = true, left = true, right = true } = {}) {
 			// delete previous canvases (if any)
 			this.remove()
-
-			// specify canvas dimensions
-			// get client div width or default value
-			this.params.MAX_WIDTH = document.querySelector('#create').clientWidth
-			this.params.width = Math.floor(this.params.MAX_WIDTH / 10) * 10
-			// golden ratio height based on longer side width
-			const goldenRatioSmallerSide = this.params.width / ((1 + Math.sqrt(5)) / 2)
-			this.params.height = Math.round(goldenRatioSmallerSide / 10) * 10 // rounded to 10
 
 			// define what to draw
 			const sketch = s => {
@@ -153,8 +147,24 @@ export default {
 			// draw
 			this.c = new this.p5(sketch)
 		},
+		setDimensions() {
+			// specify canvas dimensions
+			// get client div width or default value
+			this.params.MAX_WIDTH = document.querySelector('#create').clientWidth
+			this.params.width = Math.floor(this.params.MAX_WIDTH / 10) * 10
+			// golden ratio height based on longer side width
+			const goldenRatioSmallerSide = this.params.width / ((1 + Math.sqrt(5)) / 2)
+			this.params.height = Math.round(goldenRatioSmallerSide / 10) * 10 // rounded to 10
+		},
 		reset() {
+			// activate loading indicator
+			this.loading = true
+
+			// reset params
 			this.params = cloneDeep(initialParams)
+
+			// set dimenions based on user's browser size
+			this.setDimensions()
 
 			// start drawing
 			this.draw()
