@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<el-row :gutter="2" display="block">
-			<el-col :md="2" :lg="4" :xl="6"><div class="cutoff"></div></el-col>
-			<el-col :md="20" :lg="16" :xl="12">
+			<el-col :md="1" :lg="2" :xl="3"><div class="cutoff"></div></el-col>
+			<el-col :md="22" :lg="20" :xl="18">
 				<AppHeader />
 				<el-main>
 					<nuxt />
 				</el-main>
 			</el-col>
-			<el-col :md="2" :lg="4" :xl="6"><div class="cutoff"></div></el-col>
+			<el-col :md="1" :lg="2" :xl="3"><div class="cutoff"></div></el-col>
 		</el-row>
 		<el-backtop />
 		<AppFooter />
@@ -45,7 +45,8 @@ body {
 }
 
 p,
-li {
+li,
+span {
 	font-weight: 200;
 }
 

@@ -21,7 +21,7 @@ The CS50x course finishes with a final project that leaves much room for creativ
 -   the p5.js library to draw programmatically
 -   nuxt using vue.js
 -   element ui
--   vuex as central data store, leveraging the website visitor's localstorage
+-   vuex as central data store (only for navigation purposes though)
 
 I chose p5.js because it seems to be the leading library for drawing geometric shapes in the browser.
 

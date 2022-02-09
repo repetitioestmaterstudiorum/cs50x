@@ -12,6 +12,7 @@
     "axios": "^0.25.0",
     "core-js": "^3.19.3",
     "element-ui": "^2.15.6",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isempty": "^4.4.0",
     "nuxt": "^2.15.8",
     "p5": "^1.4.1",

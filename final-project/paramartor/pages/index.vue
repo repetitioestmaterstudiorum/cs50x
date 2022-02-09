@@ -57,7 +57,11 @@ img {
 	padding: 1rem 0;
 }
 
+/* hacky overrides */
 .el-collapse-item__header {
-	font-size: 1rem; /* hacky override */
+	font-size: 0.8rem;
+}
+.el-collapse-item__content {
+	font-size: 1rem;
 }
 </style>
