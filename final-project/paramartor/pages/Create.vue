@@ -80,7 +80,7 @@ const initialParams = {
 
 export default {
 	data() {
-		// could be saved in vuex if needed elsewhere someday
+		// could be saved in vuex to persist state on page change
 		return {
 			p5: {}, // p5 library code
 			c: {}, // p5 canvas reference

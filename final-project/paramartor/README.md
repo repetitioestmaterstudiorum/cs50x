@@ -6,7 +6,7 @@ tbd
 
 #### description:
 
-check it out live on: tbd
+check it out live on: https://dazzling-mestorf-7ab66c.netlify.app/
 
 "paramartor" is an invented word based on the idea of parametrized visual art generation.
 

@@ -3,7 +3,8 @@
 		<h1>Welcome to paramartor!</h1>
 		<p>What's paramartor?</p>
 		<p>
-			.. is an invented word derived from <strong>parametrized visual art generation</strong>.
+			.. it is an invented word derived from
+			<strong>parametrized visual art generation</strong>.
 		</p>
 		<h2>p5.js library</h2>
 		<p>

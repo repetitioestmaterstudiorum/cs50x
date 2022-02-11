@@ -5,8 +5,6 @@
 			:model="contactForm"
 			ref="contactForm"
 			name="contactForm"
-			method="post"
-			data-netlify="true"
 			data-netlify-honeypot="bot-field"
 		>
 			<input type="hidden" name="form-name" value="contactForm" />
@@ -73,20 +71,22 @@ export default {
 					const axiosConfig = {
 						header: { 'Content-Type': 'application/x-www-form-urlencoded' },
 					}
-					axios.post(
-						'/',
-						this.encode({
-							'form-name': 'contactForm',
-							...this.contactForm,
-						}),
-						axiosConfig
-					)
+					axios
+						.post(
+							'',
+							this.encode({
+								'form-name': formName,
+								...this.contactForm,
+							}),
+							axiosConfig
+						)
+						.then(_ => this.$router.push('/contactthanks'))
+						.catch(error => alert(error))
 				} else {
 					alert('Form not filled properly!')
 					return false
 				}
 			})
-			console.log('form saved!')
 		},
 	},
 }

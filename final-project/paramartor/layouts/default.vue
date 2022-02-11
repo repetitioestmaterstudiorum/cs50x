@@ -72,6 +72,7 @@ h3 {
 a {
 	text-decoration: none;
 	border-bottom: 1px dashed #08201c;
+	color: inherit;
 }
 a:visited {
 	color: inherit;
