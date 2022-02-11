@@ -1,5 +1,7 @@
 # paramartor
 
+The actual project is in the sub folder `/paramartor`. The folder `/learn-needed-tech` contains projects I did to learn the needed to tech to realize my final project.
+
 #### video demo:
 
 https://youtu.be/7pigxV91CVM
