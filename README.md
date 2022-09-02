@@ -7,7 +7,7 @@ Personal solutions to Harvard's Computer Science 50x course: https://www.edx.org
 -   learned software development fundamentals in C
 -   revamped my Python knowledge
 -   revamped my SQL knowledge
--   got to know the Flask framework: https://my-cs50x-finance.herokuapp.com/
+-   got to know the Flask framework
 
 ## final project
 
